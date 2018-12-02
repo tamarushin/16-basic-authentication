@@ -14,20 +14,29 @@ let app = express();
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());  // => req.body
-app.use(express.urlencoded({extended:true})); // req.body => from a form's key value pairs
+app.use(express.urlencoded({ extended: true })); // req.body => from a form's key value pairs
 
 app.use(authRouter);
 
 app.use(notFound);
 app.use(errorHandler);
 
+// express()
+//   .use(cors())
+//   .use(morgan('dev'))
+//   .use(express.json())
+//   .use(express.urlencoded({ extended: true }))
+//   .use(authRouter)
+//   .use(notFound)
+//   .use(errorHandler);
+
 let server = false;
 
 module.exports = {
   start: (port) => {
-    if(!server) {
+    if (!server) {
       server = app.listen(port, (err) => {
-        if(err) { throw err; }
+        if (err) { throw err; }
         console.log('Server running on', port);
       });
     }
@@ -37,7 +46,7 @@ module.exports = {
   },
 
   stop: () => {
-    server.close( () => {
+    server.close(() => {
       console.log('Server is now off');
     });
   },
